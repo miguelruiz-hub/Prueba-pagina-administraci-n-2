@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Home & Building Tech S.A.S. - Soluciones profesionales en domótica e inmótica para espacios residenciales, comerciales e industriales." />
+  <title>Smart Home & Building Tech S.A.S.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #020203;
+      --bg-soft: #0d0f12;
+      --card: rgba(255,255,255,.055);
+      --card-strong: rgba(255,255,255,.09);
+      --line: rgba(255,255,255,.12);
+      --text: #f5f7fa;
+      --muted: rgba(245,247,250,.72);
+      --accent: #f7f8fa;
+      --accent-2: #b6bcc4;
+      --accent-3: #7b828b;
+      --shadow: 0 26px 70px rgba(0,0,0,.55);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.10), transparent 26%),
+        radial-gradient(circle at top right, rgba(182,188,196,.10), transparent 22%),
+        linear-gradient(180deg, #020203 0%, #07080a 44%, #040405 100%);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{width:min(100% - 32px, var(--max)); margin-inline:auto}
+    img{max-width:100%; display:block}
+
+    .topbar{
+      position:sticky; top:0; z-index:1000;
+      backdrop-filter: blur(18px);
+      background: rgba(2,3,4,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:16px 0;
+    }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
+    .brand-mark{
+      width:42px; height:42px; border-radius:14px;
+      background: linear-gradient(135deg, #f8fafc 0%, #a6adb5 100%);
+      box-shadow: 0 10px 30px rgba(255,255,255,.10);
+      display:grid; place-items:center; color:#050607; font-weight:900;
+    }
+    .brand small{display:block; font-weight:500; color:var(--muted); margin-top:2px}
+
+    .menu{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      color:var(--muted); font-weight:500;
+    }
+    .menu a{
+      padding:10px 12px; border-radius:999px; transition:.28s ease;
+      border:1px solid transparent;
+    }
+    .menu a:hover{
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      border-color:rgba(255,255,255,.08);
+    }
+    .nav-cta{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      background:linear-gradient(135deg, #f8fafc 0%, #a5adb6 100%);
+      color:#040506; font-weight:800; padding:12px 18px; border-radius:999px;
+      box-shadow: 0 16px 34px rgba(255,255,255,.08);
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+    .nav-cta:hover{transform:translateY(-2px)}
+
+    .hero{
+      padding:92px 0 58px;
+      position:relative;
+      isolation:isolate;
+    }
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+      z-index:-1;
+      animation: drift 10s ease-in-out infinite;
+      filter: blur(8px);
+    }
+    .hero::before{
+      width:320px; height:320px;
+      right:-90px; top:-40px;
+      background:radial-gradient(circle, rgba(255,255,255,.16), transparent 68%);
+    }
+    .hero::after{
+      width:220px; height:220px;
+      left:-70px; bottom:-50px;
+      background:radial-gradient(circle, rgba(182,188,196,.14), transparent 70%);
+    }
+    .hero-grid{
+      display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 14px; border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04); border-radius:999px;
+      color:var(--muted); font-size:.92rem;
+      animation: fadeUp .8s ease both;
+    }
+    .eyebrow-dot{width:8px; height:8px; border-radius:50%; background:#f5f7fa; box-shadow:0 0 0 6px rgba(255,255,255,.14)}
+    h1{
+      margin:18px 0 14px;
+      font-size:clamp(2.6rem, 5vw, 5.2rem);
+      line-height:1.02;
+      letter-spacing:-.04em;
+      animation: fadeUp .85s ease both .08s;
+    }
+    .hero-title{
+      max-width:13ch;
+      margin:18px auto 10px;
+      text-align:center;
+    }
+    .lead{
+      font-size:1.06rem;
+      color:var(--muted);
+      max-width:62ch;
+      margin:0 auto 18px;
+    }
+    .hero-subtitle{
+      text-align:center;
+      max-width:52ch;
+      margin:0 auto 18px;
+      color:var(--text);
+      font-size:1.08rem;
+      font-weight:600;
+    }
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:14px; margin:24px 0 0;
+      justify-content:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 20px; border-radius:16px; font-weight:700;
+      border:1px solid transparent; transition:.25s ease;
+      min-width:180px;
+    }
+    .btn-primary{background:linear-gradient(135deg, #f8fafc 0%, #aeb5be 100%); color:#040506; box-shadow:var(--shadow)}
+    .btn-secondary{background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.12); color:var(--text)}
+    .btn:hover{transform:translateY(-2px)}
+
+    .hero-metrics{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px;
+    }
+    .metric{
+      padding:18px; border-radius:18px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.08);
+      animation: fadeUp .8s ease both;
+    }
+    .metric strong{display:block; font-size:1.35rem; margin-bottom:4px}
+    .metric span{color:var(--muted); font-size:.94rem}
+
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+      animation: floatCard 7s ease-in-out infinite;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -30% -40% auto;
+      width:240px; height:240px; border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.16), transparent 68%);
+      filter: blur(3px);
+    }
+    .card-title{font-size:1.05rem; font-weight:800; margin-bottom:14px}
+    .status-box{display:grid; gap:14px}
+    .status-item{
+      padding:16px; border-radius:18px; background:rgba(8,10,12,.55);
+      border:1px solid rgba(255,255,255,.08);
+      display:flex; justify-content:space-between; gap:18px; align-items:center;
+    }
+    .status-item strong{display:block; margin-bottom:4px}
+    .status-item span{color:var(--muted); font-size:.92rem}
+    .pill{padding:7px 12px; border-radius:999px; background:rgba(255,255,255,.10); color:#e7ebef; font-size:.84rem; white-space:nowrap}
+
+    section{padding:24px 0 72px}
+    .section-head{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:18px;
+      margin-bottom:24px;
+    }
+    .section-head h2{
+      margin:0; font-size:clamp(1.6rem, 3vw, 2.6rem); letter-spacing:-.03em;
+    }
+    .section-head p{margin:0; color:var(--muted); max-width:65ch}
+
+    .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+      transition:transform .28s ease, border-color .28s ease, background .28s ease;
+      animation: fadeUp .7s ease both;
+    }
+    .panel:hover{
+      transform:translateY(-6px);
+      border-color:rgba(255,255,255,.18);
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+    }
+    .panel h3{margin:0 0 10px; font-size:1.15rem}
+    .panel p{margin:0; color:var(--muted)}
+
+    .about-list{display:grid; gap:12px; margin-top:16px}
+    .about-item{
+      display:flex; gap:12px; align-items:flex-start; padding:14px 0;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .about-item:first-child{border-top:none; padding-top:0}
+    .icon{
+      min-width:40px; width:40px; height:40px; border-radius:14px; display:grid; place-items:center;
+      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.15); color:#f4f6f9; font-weight:800;
+    }
+    .about-item strong{display:block; margin-bottom:4px}
+    .about-item span{color:var(--muted); font-size:.95rem}
+
+    .service-card,
+    .project-card,
+    .advisor-card{
+      height:100%; display:flex; flex-direction:column; gap:14px;
+    }
+    .tag{
+      display:inline-flex; align-self:flex-start; padding:7px 11px; border-radius:999px;
+      background:rgba(255,255,255,.07); color:#edf1f5; font-size:.83rem;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .bullet-list{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+    .bullet-list li{display:flex; gap:10px; color:var(--muted)}
+    .bullet-list li::before{content:"•"; color:var(--accent); font-weight:900}
+
+    .project-thumb{
+      border-radius:18px; min-height:164px; overflow:hidden; position:relative;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.16), rgba(182,188,196,.06)),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.08);
+      display:flex; align-items:end; padding:18px;
+      transition:transform .35s ease, filter .35s ease;
+    }
+    .project-card:hover .project-thumb{transform:scale(1.02); filter:brightness(1.08)}
+    .project-thumb::after{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 18% 30%, rgba(255,255,255,.22), transparent 12%),
+        radial-gradient(circle at 74% 24%, rgba(255,255,255,.15), transparent 9%),
+        radial-gradient(circle at 38% 72%, rgba(255,255,255,.16), transparent 10%);
+      opacity:.55; pointer-events:none;
+    }
+    .project-thumb span{
+      position:relative; z-index:1; font-weight:800; letter-spacing:.2px;
+      background:rgba(4,5,6,.7); padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .contact-wrap{display:grid; grid-template-columns:.95fr 1.05fr; gap:18px}
+    .contact-list{display:grid; gap:14px; margin-top:16px}
+    .contact-item{display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08)}
+    .contact-item strong{display:block; margin-bottom:4px}
+    .contact-item span{color:var(--muted)}
+
+    form{display:grid; gap:14px}
+    .field-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+    input, textarea, select{
+      width:100%; padding:14px 15px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(7,8,10,.72);
+      color:var(--text); outline:none; font:inherit;
+    }
+    input::placeholder, textarea::placeholder{color:rgba(245,247,250,.45)}
+    input:focus, textarea:focus, select:focus{border-color:rgba(255,255,255,.42); box-shadow:0 0 0 4px rgba(255,255,255,.08)}
+    textarea{min-height:140px; resize:vertical}
+
+    .quote{
+      font-size:1.02rem; color:var(--muted); line-height:1.8;
+      border-left:3px solid var(--accent);
+      padding-left:16px; margin:0;
+    }
+    .signature{margin-top:14px; color:#eef1f4; font-weight:700}
+
+    .footer{
+      padding:26px 0 36px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+    }
+    .footer-grid{display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap}
+
+    .floating{
+      position:fixed; right:20px; bottom:20px; z-index:1000;
+      display:inline-flex; align-items:center; justify-content:center;
+      width:54px; height:54px; border-radius:50%;
+      background:linear-gradient(135deg, #f8fafc 0%, #a6adb5 100%);
+      color:#040506; font-weight:900; box-shadow:var(--shadow);
+      animation:pulseGlow 2.8s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(16px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+    @keyframes floatCard{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+    @keyframes drift{
+      0%,100%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(10px,12px) scale(1.05)}
+    }
+    @keyframes pulseGlow{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.08)}
+    }
+
+    @media (max-width: 980px){
+      .hero-grid, .grid-2, .grid-3, .contact-wrap{grid-template-columns:1fr}
+      .menu{display:none}
+      .hero{padding-top:52px}
+      .field-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 640px){
+      .hero-metrics{grid-template-columns:1fr}
+      .nav{padding:14px 0}
+      .brand small{display:none}
+      h1{font-size:clamp(2.2rem, 14vw, 3.6rem)}
+      .section-head{flex-direction:column; align-items:flex-start}
+      .btn, .nav-cta{width:100%}
+      .hero-actions{justify-content:stretch}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Ir a inicio">
+        <div class="brand-mark">S</div>
+        <div>
+          Smart Home & Building Tech
+          <small>Domótica e inmótica profesional</small>
+        </div>
+      </a>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#asesorias">Asesorías</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <a class="nav-cta" href="#inicio">Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div style="text-align:center; margin-inline:auto;">
+          <div class="eyebrow" style="justify-content:center;"><span class="eyebrow-dot"></span> Automatización inteligente para espacios residenciales, comerciales e industriales</div>
+          <h1 class="hero-title">Smart Home & Building Tech</h1>
+          <p class="hero-subtitle">Tecnología inteligente para espacios eficientes.</p>
+          <p class="lead" style="text-align:center;">
+            Smart Home & Building Tech S.A.S. desarrolló soluciones de domótica e inmótica con enfoque técnico, escalable y orientado a la optimización energética, el control remoto y la integración de tecnologías 4.0.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#servicios">Explorar servicios</a>
+            <a class="btn btn-secondary" href="#proyectos">Ver proyectos</a>
+          </div>
+          <div class="hero-metrics" aria-label="Indicadores principales">
+            <div class="metric"><strong>+3 áreas</strong><span>Residencial, comercial e industrial</span></div>
+            <div class="metric"><strong>IoT</strong><span>Integración y control inteligente</span></div>
+            <div class="metric"><strong>24/7</strong><span>Soporte y seguimiento técnico</span></div>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Resumen corporativo">
+          <div class="card-title">Panel ejecutivo</div>
+          <div class="status-box">
+            <div class="status-item">
+              <div>
+                <strong>Propuesta de valor</strong>
+                <span>Automatización a medida para confort, seguridad y eficiencia.</span>
+              </div>
+              <div class="pill">Estrategia</div>
+            </div>
+            <div class="status-item">
+              <div>
+                <strong>Enfoque tecnológico</strong>
+                <span>Domótica, inmótica, sensores, control remoto y análisis de datos.</span>
+              </div>
+              <div class="pill">Tecnología</div>
+            </div>
+            <div class="status-item">
+              <div>
+                <strong>Modelo de atención</strong>
+                <span>Diagnóstico, diseño, instalación, soporte y mantenimiento.</span>
+              </div>
+              <div class="pill">Servicio</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="nosotros">
+      <div class="container">
+        <div class="section-head">
+          <h2>Nosotros</h2>
+          <p>Una empresa creada para responder a la necesidad creciente de incorporar tecnología inteligente en hogares, edificios y procesos productivos.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Identidad empresarial</h3>
+            <p>
+              Smart Home & Building Tech S.A.S. se constituyó como una sociedad por acciones simplificada, debido a su flexibilidad legal y a su capacidad de adaptación a emprendimientos tecnológicos. Su propósito se orientó a ofrecer soluciones integrales de automatización con criterio técnico, visión comercial y proyección de crecimiento.
+            </p>
+            <div class="about-list">
+              <div class="about-item">
+                <div class="icon">01</div>
+                <div><strong>Enfoque técnico</strong><span>Diseño e implementación de sistemas inteligentes a partir de requerimientos funcionales reales.</span></div>
+              </div>
+              <div class="about-item">
+                <div class="icon">02</div>
+                <div><strong>Escalabilidad</strong><span>Soluciones preparadas para evolucionar hacia IoT, control remoto y analítica de datos.</span></div>
+              </div>
+              <div class="about-item">
+                <div class="icon">03</div>
+                <div><strong>Orientación al cliente</strong><span>Atención personalizada para espacios residenciales, empresariales e industriales.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Equipo y estructura</h3>
+            <p>
+              La estructura organizacional se planteó en un nivel intermedio, con dirección estratégica, soporte técnico y gestión comercial, lo que permitió una operación eficiente y ordenada.
+            </p>
+            <div class="about-list">
+              <div class="about-item">
+                <div class="icon">G</div>
+                <div><strong>Gerencia General</strong><span>Responsable de decisiones estratégicas, administración y relación con clientes clave.</span></div>
+              </div>
+              <div class="about-item">
+                <div class="icon">A</div>
+                <div><strong>Área técnica</strong><span>Ingeniería de automatización y soporte de instalación con enfoque en calidad y desempeño.</span></div>
+              </div>
+              <div class="about-item">
+                <div class="icon">M</div>
+                <div><strong>Área comercial</strong><span>Marketing y ventas para captación de clientes, posicionamiento digital y crecimiento de marca.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicios">
+      <div class="container">
+        <div class="section-head">
+          <h2>Servicios</h2>
+          <p>Portafolio diseñado para cubrir el ciclo completo del proyecto: diagnóstico, desarrollo, implementación y soporte posterior.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="panel service-card">
+            <span class="tag">Domótica</span>
+            <h3>Automatización residencial</h3>
+            <p>Integración de iluminación, climatización, accesos, seguridad y control remoto para mejorar confort y eficiencia energética en viviendas.</p>
+            <ul class="bullet-list">
+              <li>Control de luces y persianas</li>
+              <li>Videoportero y cerraduras inteligentes</li>
+              <li>Escenarios automatizados</li>
+            </ul>
+          </article>
+
+          <article class="panel service-card">
+            <span class="tag">Inmótica</span>
+            <h3>Automatización comercial e industrial</h3>
+            <p>Soluciones para edificios, oficinas y espacios productivos orientadas al control centralizado, la seguridad operativa y el uso eficiente de recursos.</p>
+            <ul class="bullet-list">
+              <li>Gestión de consumos energéticos</li>
+              <li>Monitoreo técnico centralizado</li>
+              <li>Sistemas integrados de operación</li>
+            </ul>
+          </article>
+
+          <article class="panel service-card">
+            <span class="tag">Soporte</span>
+            <h3>Mantenimiento y optimización</h3>
+            <p>Servicios preventivos y correctivos para asegurar continuidad operativa, estabilidad del sistema y mejora del desempeño tecnológico.</p>
+            <ul class="bullet-list">
+              <li>Diagnóstico y soporte técnico</li>
+              <li>Actualización de sistemas</li>
+              <li>Optimización de infraestructura</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyectos">
+      <div class="container">
+        <div class="section-head">
+          <h2>Nuestros proyectos</h2>
+          <p>Ejemplos de soluciones que la empresa pudo estructurar y presentar como referencia de capacidad técnica y enfoque de mercado.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="panel project-card">
+            <div class="project-thumb"><span>Residencia inteligente</span></div>
+            <span class="tag">Vivienda</span>
+            <h3>Casa conectada de alta eficiencia</h3>
+            <p>Proyecto orientado al control de iluminación, seguridad, climatización y escenarios automatizados en un entorno familiar moderno.</p>
+          </article>
+
+          <article class="panel project-card">
+            <div class="project-thumb"><span>Edificio corporativo</span></div>
+            <span class="tag">Comercial</span>
+            <h3>Gestión integral de instalaciones</h3>
+            <p>Propuesta para optimizar consumos, seguridad perimetral y monitoreo de áreas comunes mediante una plataforma centralizada.</p>
+          </article>
+
+          <article class="panel project-card">
+            <div class="project-thumb"><span>Planta tecnológica</span></div>
+            <span class="tag">Industrial</span>
+            <h3>Control y supervisión operativa</h3>
+            <p>Aplicación de sensores, tableros de control y monitoreo remoto para mejorar productividad, respuesta y trazabilidad del proceso.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="asesorias">
+      <div class="container">
+        <div class="section-head">
+          <h2>Asesorías</h2>
+          <p>Acompañamiento técnico y comercial para orientar al cliente en la selección de soluciones según su presupuesto, necesidad y escalabilidad.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel advisor-card">
+            <span class="tag">Diagnóstico</span>
+            <h3>Evaluación inicial del espacio</h3>
+            <p>Se realizaba un análisis del entorno para identificar oportunidades de automatización, consumo energético, seguridad y nivel de integración tecnológica.</p>
+            <ul class="bullet-list">
+              <li>Levantamiento de requerimientos</li>
+              <li>Revisión de infraestructura existente</li>
+              <li>Definición de alcance técnico</li>
+            </ul>
+          </div>
+
+          <div class="panel advisor-card">
+            <span class="tag">Planificación</span>
+            <h3>Diseño de propuesta y presupuesto</h3>
+            <p>La asesoría incluía la estructuración de una solución viable, la priorización de componentes y la estimación de costos de implementación y mantenimiento.</p>
+            <ul class="bullet-list">
+              <li>Selección de dispositivos y software</li>
+              <li>Proyección de escalabilidad</li>
+              <li>Recomendaciones de retorno funcional</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Marca y comunicación digital</h2>
+          <p>La identidad corporativa y la socialización digital se alinearon para fortalecer la presencia visual y comercial del emprendimiento.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Presencia digital</h3>
+            <p>Página web, portafolio técnico, presentación académica y redes sociales para posicionamiento de marca.</p>
+          </div>
+          <div class="panel">
+            <h3>Proyección comercial</h3>
+            <p>La comunicación visual se orientó a transmitir tecnología, innovación, confianza y profesionalismo en cada punto de contacto con el cliente.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contacto</h2>
+          <p>Espacio para iniciar conversaciones comerciales, solicitar diagnósticos o coordinar una presentación técnica del servicio.</p>
+        </div>
+
+        <div class="contact-wrap">
+          <div class="panel">
+            <h3>Información de contacto</h3>
+            <p>La atención podía canalizarse a través de medios digitales y comerciales de respuesta rápida.</p>
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="icon">@</div>
+                <div><strong>Correo</strong><span>contacto@smarthomebuildingtech.com</span></div>
+              </div>
+              <div class="contact-item">
+                <div class="icon">W</div>
+                <div><strong>WhatsApp</strong><span>+593 99 000 0000</span></div>
+              </div>
+              <div class="contact-item">
+                <div class="icon">L</div>
+                <div><strong>Ubicación</strong><span>Quito, Ecuador</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Formulario de solicitud</h3>
+            <form>
+              <div class="field-grid">
+                <input type="text" name="nombre" placeholder="Nombre completo" />
+                <input type="email" name="correo" placeholder="Correo electrónico" />
+              </div>
+              <div class="field-grid">
+                <input type="tel" name="telefono" placeholder="Teléfono de contacto" />
+                <select name="servicio">
+                  <option>Seleccione un servicio</option>
+                  <option>Automatización residencial</option>
+                  <option>Automatización comercial</option>
+                  <option>Automatización industrial</option>
+                  <option>Asesoría técnica</option>
+                </select>
+              </div>
+              <textarea name="mensaje" placeholder="Describa su requerimiento o proyecto"></textarea>
+              <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>© 2026 Smart Home & Building Tech S.A.S. Todos los derechos reservados.</div>
+      <div>Diseño web corporativo para GitHub Pages</div>
+    </div>
+  </footer>
+
+  <a class="floating" href="#inicio" aria-label="Volver arriba">↑</a>
+</body>
+</html>
